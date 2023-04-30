@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div data-player>
+            <audio controls src="musique.mp3"></audio>
+
+            <button data-player-play>Play</button>
+            <button data-player-pause>Pause</button>
+            <button ata-player-stop>Stop</button>
+
+            <input
+                type="range"
+                name="volume"
+                id="volume"
+                min="0"
+                max="1"
+                value="0.5"
+                step="0.1"
+                data-player-volume
+            />
+            <input
+                type="range"
+                name="track"
+                id="track"
+                min="0"
+                value="0"
+                data-player-track
+            />
+
+            <span data-player-duration> </span>
+            <span data-player-currentTime></span>
+        </div>
+
+        <script src="PlayerAudio.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
