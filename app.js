@@ -1,9 +1,9 @@
-console.log('Hello')
+window.addEventListener('load', () => {
+    const player = document.querySelector('[data-player]')
 
-const player = document.querySelector('[data-player]')
+    const test = new PlayerAudio(player, { showDuration: true })
 
-const test = new PlayerAudio(player)
+    test.init()
 
-test.init()
-
-console.dir(document.querySelector('audio'))
+    console.dir(document.querySelector('audio'))
+})

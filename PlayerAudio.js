@@ -1,15 +1,50 @@
 class PlayerAudio {
-    constructor(elt, options) {
+    constructor(elt, { ...options }) {
         this.player = elt
-        this.nativePlayer = this.player.querySelector('audio')
+        this.showDuration = options.showDuration
+        this.nativePlayer = elt.querySelector('audio')
         this.volume = elt.querySelector('[data-player-volume]')
         this.track = elt.querySelector('[data-player-track]')
         this.buttonPlay = elt.querySelector('[data-player-play]')
         this.buttonPause = elt.querySelector('[data-player-pause]')
-        this.buttonStop = elt.querySelector('[data-player-stop]')
     }
 
-    eventHandler() {}
+    eventHandler() {
+        this.buttonPlay.addEventListener('click', () => {
+            this.play()
+        })
+        this.buttonPause.addEventListener('click', () => {
+            this.pause()
+        })
+
+        this.track.addEventListener('input', (e) => {
+            this.changeCurrentTime(e.target.value)
+        })
+
+        this.volume.addEventListener('input', () => {
+            this.nativePlayer.volume = volume
+        })
+
+        this.nativePlayer.addEventListener('timeupdate', () => {
+            this.track.value = this.nativePlayer.currentTime
+
+            if (this.showDuration) {
+                this.player.querySelector(
+                    '[data-player-currentTime]'
+                ).innerText = this.convertTime(this.nativePlayer.currentTime)
+            }
+        })
+
+        this.nativePlayer.addEventListener('durationchange', () => {
+            const duration = this.nativePlayer.duration
+            this.track.setAttribute('max', duration)
+
+            if (this.showDuration) {
+                this.player.querySelector('[data-player-duration]').innerText =
+                    this.convertTime(duration)
+            }
+        })
+    }
 
     play() {
         this.nativePlayer.play()
@@ -19,21 +54,20 @@ class PlayerAudio {
         this.nativePlayer.pause()
     }
 
-    stop() {
-        this.nativePlayer.stop()
+    changeCurrentTime(time) {
+        this.nativePlayer.currentTime = time
     }
 
-    volume() {
-        this.nativePlayer.volume
-    }
+    convertTime(time) {
+        const minutes = Math.floor(time / 60)
+        const seconds = Math.floor(time % 60)
+            .toString()
+            .padStart(2, '0')
 
-    getDuration() {
-        const duration = this.nativePlayer.durartion
+        return `${minutes}:${seconds}`
     }
-
-    setCurrentTime() {}
 
     init() {
-        console.log(this.player)
+        this.eventHandler()
     }
 }
