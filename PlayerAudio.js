@@ -21,8 +21,8 @@ class PlayerAudio {
             this.changeCurrentTime(e.target.value)
         })
 
-        this.volume.addEventListener('input', () => {
-            this.nativePlayer.volume = volume
+        this.volume.addEventListener('input', (e) => {
+            this.nativePlayer.volume = e.target.value
         })
 
         this.nativePlayer.addEventListener('timeupdate', () => {
